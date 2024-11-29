@@ -1,0 +1,7 @@
+C:/Users/marti/Desktop/PARCO1/cmake-build-debug/CMakeFiles/main.dir
+C:/Users/marti/Desktop/PARCO1/cmake-build-debug/CMakeFiles/block.dir
+C:/Users/marti/Desktop/PARCO1/cmake-build-debug/CMakeFiles/blocksize.dir
+C:/Users/marti/Desktop/PARCO1/cmake-build-debug/CMakeFiles/recursive.dir
+C:/Users/marti/Desktop/PARCO1/cmake-build-debug/CMakeFiles/open.dir
+C:/Users/marti/Desktop/PARCO1/cmake-build-debug/CMakeFiles/edit_cache.dir
+C:/Users/marti/Desktop/PARCO1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
