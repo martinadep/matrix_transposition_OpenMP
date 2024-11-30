@@ -30,7 +30,7 @@ int main(int argc, char **argv) {
 
             float time_sum = 0.0;
             for (int i = 0; i < LOOP; i++) {
-                data[i] = blockbasedsizeStoring(M, T, matrix_size, block_size);
+                data[i] = blocksize_storing(M, T, matrix_size, block_size);
                 time_sum += data[i];
             }
 
@@ -57,7 +57,7 @@ int main(int argc, char **argv) {
 /// "./blockbasedsize_out/<B>block_<N>matrix.txt"
 ///
 /// where B is size of block and N is size of matrix
-float blockbasedsizeStoring(float **M, float **T, int matrix_size, int block_size) {
+float blocksize_storing(float **M, float **T, int matrix_size, int block_size) {
     if (matrix_size <= block_size) {
         return 0.0;
     }

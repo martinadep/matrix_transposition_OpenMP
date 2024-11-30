@@ -5,7 +5,7 @@
 
 /// This is a function used to test correctness of the checkSym()s and matTransp()s
 /// It performs tests on [4x4] matrices, both symmetric and asymmetric
-bool test_functions() {
+void test_functions() {
     int two_pow = 2;
     float **M = allocate_sqr_matrix(pow(2, two_pow));
     float **T = allocate_sqr_matrix(pow(2, two_pow));
@@ -66,6 +66,4 @@ bool test_functions() {
 
     if (checkSymOMP(M_symmetric, 2)) printf("Matrix is symmetric [check_SymOMP]\n");
     else printf("Matrix is NOT symmetric [checkOMP]\n");
-
-    return check_Sym + check_SymImp + check_SymOMP;
 }

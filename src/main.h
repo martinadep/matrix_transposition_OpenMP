@@ -30,5 +30,5 @@ float calculate_std_dev(float arr[], int array_size, float mean);
 float calculate_mean(float arr[], int array_size);
 
 // TEST_FUNCTIONS.C
-bool test_functions();
+void test_functions();
 #endif

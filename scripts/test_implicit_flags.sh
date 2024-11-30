@@ -1,4 +1,5 @@
 #!/bin/bash
+echo "Cleaning previous build and outputs..."
 rm -r objects
 rm medie_implicit.csv
 cd ..

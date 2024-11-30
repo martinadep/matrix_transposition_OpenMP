@@ -64,7 +64,7 @@ $ ssh <username>@hpc.unitn.it
 ```bash
 $ git clone https://github.com/martinadep/parallel_midterm
 ```
-3. Navigate the the repository folder
+3. Navigate to the folder
 ```bash
 $ cd parallel_midterm/
 ```

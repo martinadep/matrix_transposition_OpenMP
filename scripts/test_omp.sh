@@ -5,9 +5,8 @@ SOURCE_FILES="./src/explicit/explicit.c ./src/utils.c"
 OUTPUT_FILE="open"
 OUTPUTDIR="explicit_out"
 
-
+echo "Cleaning previous build and outputs..."
 rm -rf objects $OUTPUTDIR *.o medie_explicit.csv
-echo "Cleaning previous build and outputs"
 
 mkdir $OUTPUTDIR
 mkdir objects

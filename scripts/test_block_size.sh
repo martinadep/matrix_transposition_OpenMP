@@ -4,7 +4,7 @@ SOURCE_FILES="./src/implicit/block_size.c ./src/utils.c"
 OUTPUT_FILE="block"
 OUTPUTDIR="blockbasedsize_out"
 
-echo "Cleaning previous build and outputs"
+echo "Cleaning previous build and outputs..."
 rm -rf objects $OUTPUTDIR *.o medie.csv
 
 mkdir $OUTPUTDIR

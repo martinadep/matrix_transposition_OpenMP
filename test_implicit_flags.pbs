@@ -17,6 +17,7 @@ gcc --version
 echo "Job running on: $(hostname)"
 lscpu
 
+echo "Test implicit flags running..."
 cd /home/martina.depiccoli/parallel_midterm/scripts
 chmod +x ./test_implicit_flags.sh
 ./test_implicit_flags.sh

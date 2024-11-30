@@ -17,6 +17,7 @@ gcc --version
 echo "Job running on: $(hostname)"
 lscpu
 
+echo "Test block size running..."
 cd /home/martina.depiccoli/parallel_midterm/scripts
 chmod +x ./test_block_size.sh
 ./test_block_size.sh

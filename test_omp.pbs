@@ -17,6 +17,7 @@ gcc --version
 echo "Job running on: $(hostname)"
 lscpu
 
+echo "Test omp running..."
 cd /home/martina.depiccoli/parallel_midterm/scripts
 chmod +x test_omp.sh
 ./test_omp.sh

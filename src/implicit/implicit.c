@@ -23,7 +23,7 @@ int main() {
 
 
         for (int i = 0; i < LOOP; i++) {
-            data[i] = blockbasedTiming(M, T, matrix_size);
+            data[i] = blockbased_timing(M, T, matrix_size);
         }
         int count_filtered = remove_outliers(data, filtered_data, LOOP, thrsd);
         if (count_filtered > 0) {
@@ -44,7 +44,7 @@ int main() {
 ///
 /// The block size is chosen according to @param[in] matrix_size
 ///
-double blockbasedTiming(float **M, float **T, int matrix_size) {
+double blockbased_timing(float **M, float **T, int matrix_size) {
     double wt1= omp_get_wtime();
     int block_size = choose_block_size(matrix_size);
     block_based_transpose(M, T, matrix_size, block_size);

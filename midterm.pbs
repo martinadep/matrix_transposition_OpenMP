@@ -25,7 +25,7 @@ mkdir bin
 gcc src/main.c src/utils.c -std=c11 -lm -fopenmp -o bin/matrix_transposition
 
 cd bin
-echo "Executing smaller matrices..."
+echo "Executing job..."
 for mat_size in 4 5 6 7 8 9 10 11 12; do
     echo "matrix $mat_size"
     ./matrix_transposition $mat_size

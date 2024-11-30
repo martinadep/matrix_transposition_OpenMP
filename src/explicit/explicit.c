@@ -43,9 +43,9 @@ int main(int argc, char **argv) {
             init_matrix(M, matrix_size);
 
             for (int i = 0; i < LOOP; i++) {
-                data_S[i] = explicitTiming(M, T, matrix_size, num_threads, 0);
-                data_B[i] = explicitTiming(M, T, matrix_size, num_threads, 1);
-                data_L[i] = explicitTiming(M, T, matrix_size, num_threads, 2);
+                data_S[i] = explicit_timing(M, T, matrix_size, num_threads, 0);
+                data_B[i] = explicit_timing(M, T, matrix_size, num_threads, 1);
+                data_L[i] = explicit_timing(M, T, matrix_size, num_threads, 2);
             }
 
             int count_filtered_S = remove_outliers(data_S, filtered_data_S, LOOP, thrsd);
@@ -92,7 +92,7 @@ int main(int argc, char **argv) {
 /// Block-based transposition given the block size.
 /// Returns the elapsed time taken for the transposition.
 /// Stores the result in a text file
-double explicitTiming(float **source, float **dest, int size, int num_threads, int mode) {
+double explicit_timing(float **source, float **dest, int size, int num_threads, int mode) {
     if (size <= num_threads) {
         return 0.0;
     }

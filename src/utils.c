@@ -58,7 +58,7 @@ void print_matrix(float **matrix, int size) {
     for (int i = 0; i < size; i++) {
         printf("\t");
         for(int j = 0; j < size; j++)
-            printf("%.2f ", matrix[i][j]);
+            printf("%.3f ", matrix[i][j]);
         printf("\n");
     }
 }

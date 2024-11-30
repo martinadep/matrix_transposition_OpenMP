@@ -16,7 +16,7 @@
 int main(int argc, char **argv) {
     srand(time(NULL));
     if (argc != 2) {
-        printf("Usage: ./main matrix_size\n");
+        printf("Usage: ./main <matrix_size>\n");
         return 1;
     }
     int n = atoi(argv[1]);
