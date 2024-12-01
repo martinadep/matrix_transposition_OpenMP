@@ -1,10 +1,10 @@
 #ifndef IMPLICIT_H
 #define IMPLICIT_H
 
-void blockBasedTranspose(float** source,float** dest, int size, int block_size);
-void recursiveTranspose(float** source, float** dest, int row_start, int col_start, int size);
+// IMPLICIT.C
+void block_based_transpose(float** source,float** dest, int matrix_size, int block_size);
+double blockbasedTiming(float **M, float **T, int matrix_size);
 
-float blockbasedStoring(float **M, float **T, int size);
-float blockbasedsizeStoring(float **M, float **T, int size, int block_size);
-float recursiveStoring(float** M, float** T, int size);
+// BLOCK_SIZE.C
+float blockbasedsizeStoring(float **M, float **T, int matrix_size, int block_size);
 #endif

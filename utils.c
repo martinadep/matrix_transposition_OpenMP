@@ -38,7 +38,7 @@ void free_matrix(float **matrix, int size) {
     }
 }
 
-/// Random floats initialization of a  square [size] x [size] matrix
+/// Random floats initialization of a square [size] x [size] matrix
 void init_matrix(float **matrix, int size) {
     // Initialize the matrix with random values
     //printf("Initializing random %d x %d matrix...\n", size, size);
@@ -49,6 +49,7 @@ void init_matrix(float **matrix, int size) {
     }
     // printf("Initializaton done\n");
 }
+/// Function that prints a square [size] x [size] matrix
 void print_matrix(float **matrix, int size) {
     for (int i = 0; i < size; i++) {
         printf("\t");
@@ -58,36 +59,34 @@ void print_matrix(float **matrix, int size) {
     }
 }
 
-// ------ FUNZIONI PER ELIMINARE OUTLIERS E CALCOLARE MEDIE -------
-
-
-
-float calcola_media(float arr[], int n) {
-    float somma = 0.0;
-    for (int i = 0; i < n; i++) {
-        somma += arr[i];
+// ------ FUNCTIONS TO CANCEL OUTLIERS AND CALCULATE MEANS -------
+/// Function to calculate mean of the elements inside an array
+float calculate_mean(float arr[], int array_size) {
+    float sum = 0.0;
+    for (int i = 0; i < array_size; i++) {
+        sum += arr[i];
     }
-    return somma / n;
+    return sum / array_size;
 }
 
-/// Funzione per calcolare la deviazione standard
-float calcola_deviazione_standard(float arr[], int n, float media) {
-    float somma_quadrata = 0.0;
-    for (int i = 0; i < n; i++) {
-        somma_quadrata += (arr[i] - media) * (arr[i] - media);
+/// Function to calculate standard deviation
+float calculate_std_dev(float arr[], int array_size, float mean) {
+    float quadratic_sum = 0.0;
+    for (int i = 0; i < array_size; i++) {
+        quadratic_sum += (arr[i] - mean) * (arr[i] - mean);
     }
-    return sqrt(somma_quadrata / n);
+    return sqrt(quadratic_sum / array_size);
 }
 
-/// Funzione per filtrare gli outliers basandosi su una soglia di deviazione standard
-int rimuovi_outliers(float dati[], float dati_filtrati[], int dati_size, float soglia) {
-    float media = calcola_media(dati, dati_size);
-    float deviazione_standard = calcola_deviazione_standard(dati, dati_size, media);
+/// Function that cleans an array from outliers based on a threshold from std dev
+int remove_outliers(float data[], float filtered_data[], int data_size, float threshold) {
+    float media = calculate_mean(data, data_size);
+    float deviazione_standard = calculate_std_dev(data, data_size, media);
 
     int indice_output = 0;
-    for (int i = 0; i < dati_size; i++) {
-        if (fabs(dati[i] - media) <= soglia * deviazione_standard) {
-            dati_filtrati[indice_output++] = dati[i];
+    for (int i = 0; i < data_size; i++) {
+        if (fabs(data[i] - media) <= threshold * deviazione_standard) {
+            filtered_data[indice_output++] = data[i];
         }
     }
     return indice_output;

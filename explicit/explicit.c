@@ -4,8 +4,20 @@
 #include <omp.h>
 #include "explicit.h"
 #include "../main.h"
-// usa anche praagma static per assegnare lo stesso lavoro ai thread
-// dimensioni ottimali 16 per matrix<2048, 64 per matrix>=2048
+
+/// Execute this main with different <num_threads>.
+/// It computes matrix transposition with three different approaches
+/// all of them optimized with OpenMP:
+///
+/// - naive approach
+///
+/// - block-based approach
+///
+/// - block-based loop-unrolled approach
+///
+/// You can store the result in a .csv file with the following format:
+///
+/// "matrix_size, mean, num_threads, approach"
 int main(int argc, char **argv) {
     srand(time(NULL));
     if (argc != 2) {
@@ -14,15 +26,15 @@ int main(int argc, char **argv) {
     }
     int num_threads = atoi(argv[1]);
 
-    float dati_filtratiSeq[LOOP];
-    float datiSeq[LOOP];
+    float filtered_data_S[LOOP];
+    float data_S[LOOP];
 
-    float dati_filtratiBlock[LOOP];
-    float datiBlock[LOOP];
+    float filtered_data_B[LOOP];
+    float data_B[LOOP];
 
-    float dati_filtratiLoop[LOOP];
-    float datiLoop[LOOP];
-    float soglia = 2.0;
+    float filtered_data_L[LOOP];
+    float data_L[LOOP];
+    float thrsd = 2.0;
 
     for (int matrix_size = MIN; matrix_size <= MAX; matrix_size *= 2) {
         if (matrix_size > num_threads) {
@@ -30,56 +42,57 @@ int main(int argc, char **argv) {
             float **T = allocate_sqr_matrix(matrix_size);
             init_matrix(M, matrix_size);
 
-            float time_sumS = 0.0, time_sumB = 0.0, time_sumL = 0.0;
             for (int i = 0; i < LOOP; i++) {
-                datiSeq[i] = explicitStoring(M, T, matrix_size, num_threads, 0);
-                time_sumS += datiSeq[i];
-
-                datiBlock[i] = explicitStoring(M, T, matrix_size, num_threads, 1);
-                time_sumB += datiBlock[i];
-
-                datiLoop[i] = explicitStoring(M, T, matrix_size, num_threads, 2);
-                time_sumL += datiLoop[i];
+                data_S[i] = explicitTiming(M, T, matrix_size, num_threads, 0);
+                data_B[i] = explicitTiming(M, T, matrix_size, num_threads, 1);
+                data_L[i] = explicitTiming(M, T, matrix_size, num_threads, 2);
             }
 
-            int count_filtratiS = rimuovi_outliers(datiSeq, dati_filtratiSeq, LOOP, soglia);
-            if (count_filtratiS > 0) {
-                double media_filtrata = calcola_media(dati_filtratiSeq, count_filtratiS);
-                //printf("Media dei dati filtrati sequential matrice [%d]x[%d]: %.7fs\n", matrix_size, matrix_size, media_filtrata);
-                printf("%d,%.7f,%d,naive\n", matrix_size, media_filtrata, num_threads);
+            int count_filtered_S = remove_outliers(data_S, filtered_data_S, LOOP, thrsd);
+            if (count_filtered_S > 0) {
+                double filtered_data_mean = calculate_mean(filtered_data_S, count_filtered_S);
+                // READABLE FORMAT
+                //printf("[%dx%d] mean for %d threads: %.7f (naive)\n", matrix_size, matrix_size, num_threads, filtered_data_mean);
+
+                // .CSV FORMAT
+                printf("%d,%.7f,%d,naive\n", matrix_size, filtered_data_mean, num_threads);
             } else {
-                printf("Tutti i valori considerati outliers in una riga\n");
+                printf("All values considered outliers in a row\n");
             }
 
-            int count_filtratiB = rimuovi_outliers(datiBlock, dati_filtratiBlock, LOOP, soglia);
-            if (count_filtratiB > 0) {
-                double media_filtrata = calcola_media(dati_filtratiBlock, count_filtratiB);
-                //printf("Media dei dati filtrati block matrice [%d]x[%d]: %.7fs\n", matrix_size, matrix_size, media_filtrata);
-                printf("%d,%.7f,%d,block-based\n", matrix_size, media_filtrata, num_threads);
+            int count_filtered_B = remove_outliers(data_B, filtered_data_B, LOOP, thrsd);
+            if (count_filtered_B > 0) {
+                double filtered_data_mean = calculate_mean(filtered_data_B, count_filtered_B);
+                // READABLE FORMAT
+                //printf("[%dx%d] mean for %d threads: %.7f (block-based)\n", matrix_size, matrix_size, num_threads, filtered_data_mean);
+
+                // .CSV FORMAT
+                printf("%d,%.7f,%d,block-based\n", matrix_size, filtered_data_mean, num_threads);
             } else {
-                printf("Tutti i valori considerati outliers in una riga\n");
+                printf("All values considered outliers in a row\n");
             }
 
-            int count_filtratiL = rimuovi_outliers(datiLoop, dati_filtratiLoop, LOOP, soglia);
-            if (count_filtratiL > 0) {
-                double media_filtrata = calcola_media(dati_filtratiLoop, count_filtratiL);
-                //printf("Media dei dati filtrati loop matrice [%d]x[%d]: %.7fs\n", matrix_size, matrix_size, media_filtrata);
-                printf("%d,%.7f,%d,block-based_LU\n", matrix_size, media_filtrata, num_threads);
+            int count_filtered_L = remove_outliers(data_L, filtered_data_L, LOOP, thrsd);
+            if (count_filtered_L > 0) {
+                double filtered_data_mean = calculate_mean(filtered_data_L, count_filtered_L);
+                // READABLE FORMAT
+                //printf("[%dx%d] mean for %d threads: %.7f (block-based loop-unrolled)\n", matrix_size, matrix_size, num_threads, filtered_data_mean);
+
+                // .CSV FORMAT
+                printf("%d,%.7f,%d,block-basedLU\n", matrix_size, filtered_data_mean, num_threads);
             } else {
-                printf("Tutti i valori considerati outliers in una riga\n");
+                printf("All values considered outliers in a row\n");
             }
         }
         printf("\n");
     }
-
-    printf("Medie calcolate e salvate in 'medie.csv'\n");
     return 0;
 }
 
 /// Block-based transposition given the block size.
 /// Returns the elapsed time taken for the transposition.
 /// Stores the result in a text file
-float explicitStoring(float **source, float **dest, int size, int num_threads, int mode) {
+double explicitTiming(float **source, float **dest, int size, int num_threads, int mode) {
     if (size <= num_threads) {
         return 0.0;
     }
@@ -95,7 +108,7 @@ float explicitStoring(float **source, float **dest, int size, int num_threads, i
     if (mode == 0) {
         // Wall clock time storing explicitTranspose
         wt1 = omp_get_wtime();
-        explicitTransposeSeq(source, dest, size, num_threads);
+        expTransposeSeq(source, dest, size, num_threads);
         wt2 = omp_get_wtime();
         elapsed = wt2 - wt1;
         fprintf(file, "%f s - %d threads explicitTransposeSeq\n", elapsed, num_threads);
@@ -104,7 +117,7 @@ float explicitStoring(float **source, float **dest, int size, int num_threads, i
     if (mode == 1) {
         // Wall clock time storing explicitTranspose
         wt1 = omp_get_wtime();
-        explicitTransposeBlock(source, dest, size, num_threads);
+        expTransposeBB(source, dest, size, num_threads);
         wt2 = omp_get_wtime();
         elapsed = wt2 - wt1;
         fprintf(file, "%f s - %d threads explicitTransposeBlock\n", elapsed, num_threads);
@@ -112,7 +125,7 @@ float explicitStoring(float **source, float **dest, int size, int num_threads, i
     if (mode == 2) {
         // Wall clock time storing explicitTranspose
         wt1 = omp_get_wtime();
-        explicitTransposeLoop(source, dest, size, num_threads);
+        expTransposeBB_loop(source, dest, size, num_threads);
         wt2 = omp_get_wtime();
         elapsed = wt2 - wt1;
         fprintf(file, "%f s - %d threads explicitTransposeLoop\n", elapsed, num_threads);
@@ -120,8 +133,19 @@ float explicitStoring(float **source, float **dest, int size, int num_threads, i
     fclose(file);
     return elapsed;
 }
+/// naive matrix transposition, parallelized with OMP
+void expTransposeSeq(float **source, float **dest, int size, int num_threads) {
+    omp_set_num_threads(num_threads);
+#pragma omp parallel for collapse(2)
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            dest[i][j] = source[j][i];
+        }
+    }
+}
 
-void explicitTransposeBlock(float **source, float **dest, int size, int num_threads) {
+/// block-based matrix transposition, parallelized with OMP
+void expTransposeBB(float **source, float **dest, int size, int num_threads) {
     int block_size = choose_block_size(size);
     omp_set_num_threads(num_threads);
 #pragma omp parallel for collapse(2)
@@ -136,7 +160,8 @@ void explicitTransposeBlock(float **source, float **dest, int size, int num_thre
     }
 }
 
-void explicitTransposeLoop(float **source, float **dest, int size, int num_threads) {
+/// block-based loop-unrolled matrix transposition, parallelized with OMP
+void expTransposeBB_loop(float **source, float **dest, int size, int num_threads) {
     int block_size = choose_block_size(size);
     omp_set_num_threads(num_threads);
 #pragma omp parallel for collapse(2)
@@ -150,16 +175,6 @@ void explicitTransposeLoop(float **source, float **dest, int size, int num_threa
                     dest[bj + 1][bi + 1] = source[bi + 1][bj + 1];
                 }
             }
-        }
-    }
-}
-
-void explicitTransposeSeq(float **source, float **dest, int size, int num_threads) {
-    omp_set_num_threads(num_threads);
-#pragma omp parallel for collapse(2)
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            dest[i][j] = source[j][i];
         }
     }
 }
