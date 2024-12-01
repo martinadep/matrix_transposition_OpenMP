@@ -1,0 +1,58 @@
+#!/bin/bash
+# Job name
+#PBS -N midtermI
+# Output files
+#PBS -o ./matrix_transp.txt
+#PBS -e ./matrix_transp.e
+# Queue name
+#PBS -q short_cpuQ
+# Set the maximum wall time
+#PBS -l walltime=0:10:00
+# Number of nodes, cpus, mpi processors and amount of memory
+#PBS -l select=1:ncpus=96:mem=256mb:ompthreads=96
+
+# Modules for C
+module load gcc91
+# Define gcc and g++ to use the version 9.1.0
+
+gcc() {
+    gcc-9.1.0 "$@"
+}
+
+gcc --version
+
+
+echo "Job running on: $(hostname)"
+lscpu
+
+cd /home/martina.depiccoli/midterm/
+
+# Compile and run
+gcc main.c utils.c -std=c11 -lm -fopenmp -o bin/matrix_transposition
+
+mkdir bin
+cd bin
+
+
+echo "Executing smaller matrices..."
+for small_size in 4 5 6; do
+echo "matrix $small_size"
+    export OMP_NUM_THREADS=1; ./matrix_transposition $small_size
+done
+echo
+
+echo "Executing medium matrices..."
+for med_size in 7 8; do
+echo "matrix $med_size"
+    export OMP_NUM_THREADS=16; ./matrix_transposition $med_size
+done
+echo
+
+echo "Executing large matrices..."
+for large_size in 9 10 11 12; do
+echo "matrix $large_size"
+    export OMP_NUM_THREADS=96; ./matrix_transposition $large_size
+done
+
+echo "All executions completed."
+

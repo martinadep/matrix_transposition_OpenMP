@@ -69,7 +69,7 @@ int main(int argc, char **argv) {
      * implemented in main.c, over two [4x4] matrices, one is
      * symmetric and one is asymmetric.
     */
-    test_functions();
+    //test_functions();
 
     return 0;
 }

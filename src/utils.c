@@ -2,8 +2,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <stdbool.h>
-#include <sys/time.h>
 #include "main.h"
 
 int choose_block_size(int matrix_size) {

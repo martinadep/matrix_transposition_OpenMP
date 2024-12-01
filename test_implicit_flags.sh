@@ -1,7 +1,7 @@
 #!/bin/bash
 rm -r objects
 rm medie_implicit.csv
-SOURCE_FILES="./implicit/implicit.c utils.c"
+SOURCE_FILES="./implicit/implicit.c src/utils.c"
 OUTPUTFILE=$medie_implicit.csv
 
 gcc $SOURCE_FILES -std=c11 -lm -fopenmp -O0 -o esegO0.o

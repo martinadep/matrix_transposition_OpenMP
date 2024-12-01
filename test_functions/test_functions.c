@@ -1,7 +1,7 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./main.h"
+#include "src/main.h"
 
 /// This is a function used to test correctness of the checkSym()s and matTransp()s
 /// It performs tests on [4x4] matrices, both symmetric and asymmetric
