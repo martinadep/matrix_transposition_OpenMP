@@ -43,11 +43,11 @@ bool test_functions() {
         print_matrix(T, pow(2, two_pow));
     }
 
-    printf("\nM_symmetric:\n");
+    printf("\n-----------------------------\nM_symmetric:\n");
     float symmetric[4][4] = {
         {1.0, 2.0, 3.0, 4.0},
         {2.0, 1.0, 0.0, 5.0},
-        {3.1, 0.0, 1.0, 6.0},
+        {3.0, 0.0, 1.0, 6.0},
         {4.0, 5.0, 6.0, 7.0}
     };
     float **M_symmetric = allocate_sqr_matrix(4);
@@ -60,9 +60,12 @@ bool test_functions() {
     print_matrix(M_symmetric, pow(2, 2));
     if (checkSym(M_symmetric, 2)) printf("Matrix is symmetric [checkSym]\n");
     else printf("Matrix is NOT symmetric [checkSym]\n");
+
     if (checkSymImp(M_symmetric, 2)) printf("Matrix is symmetric [checkSymImp]\n");
     else printf("Matrix is NOT symmetric [checkImp]\n");
+
     if (checkSymOMP(M_symmetric, 2)) printf("Matrix is symmetric [check_SymOMP]\n");
     else printf("Matrix is NOT symmetric [checkOMP]\n");
-    return check_Sym && check_SymImp && check_SymOMP;
+
+    return check_Sym + check_SymImp + check_SymOMP;
 }

@@ -7,8 +7,8 @@
 #include "main.h"
 
 int choose_block_size(int matrix_size) {
-    if (matrix_size < 256) return 16; // [0, 256)
-    if (matrix_size < 1024) return 64; // [512, 1024)
+    if (matrix_size < 256) return 16; // [0, 128]
+    if (matrix_size < 1024) return 64; // [256, 512]
     return 256; // [1024, inf)
 }
 /// Dynamic allocation of a square [size] x [size] matrix

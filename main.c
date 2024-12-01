@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
 }
 
 
-/// Naive matrix transposition approach
+/// Naive matrix transposition
 void matTranspose(float **M, float **T, int n) {
     int size = pow(2, n);
 #pragma omp parallel num_threads(1)
@@ -85,6 +85,22 @@ void matTranspose(float **M, float **T, int n) {
         }
     }
 }
+
+/// Naive check symmetry
+int checkSym(float **M, int n) {
+    int size = pow(2, n);
+    int is_sym = 1; // assumed symmetric
+#pragma omp parallel num_threads(1)
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            if (M[i][j] != M[j][i]) {
+                is_sym = 0; // non-symmetric
+            }
+        }
+    }
+    return is_sym;
+}
+
 /// Parallel OMP matrix transposition
 void matTransposeOMP(float **M, float **T, int n) {
     int size = pow(2, n);
@@ -103,20 +119,6 @@ void matTransposeOMP(float **M, float **T, int n) {
         }
     }
 }
-/// Naive check symmetry
-int checkSym(float **M, int n) {
-    int size = pow(2, n);
-    int is_sym = 1; // assumed symmetric
-#pragma omp parallel num_threads(1)
-    for (int i = 0; i < size; i++) {
-        for (int j = 0; j < size; j++) {
-            if (M[j][i] != M[i][j]) {
-                is_sym = 0; // non-symmetric
-            }
-        }
-    }
-    return is_sym;
-}
 
 /// Parallel OMP check symmetry
 int checkSymOMP(float **M, int n) {
@@ -125,7 +127,7 @@ int checkSymOMP(float **M, int n) {
 #pragma omp parallel for collapse(2) reduction(&&:is_sym)
     for (int i = 0; i < size; i++) {
         for (int j = 0; j < size; j++) {
-            if (M[j][i] != M[i][j]) {
+            if (M[i][j] != M[j][i]) {
                 is_sym = 0; // non-symmetric
             }
         }
@@ -165,7 +167,7 @@ bool checkSymImp(float **M, int n) {
         for (int j = 0; j < size; j += block_size) {
             for (int bi = i; bi < i + block_size && bi < size; bi++) {
                 for (int bj = j; bj < j + block_size && bj < size; bj++) {
-                    if (M[bj][bi] != M[bi][bj]) {
+                    if (M[bi][bj] != M[bj][bi]) {
                         is_sym = false;
                     }
                 }
