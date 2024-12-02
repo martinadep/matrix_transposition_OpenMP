@@ -74,7 +74,7 @@ int main(int argc, char **argv) {
      * implemented in main.c, over two [4x4] matrices, one is
      * symmetric and one is asymmetric.
     */
-    //test_functions();
+    test_functions();
 
     return 0;
 }
@@ -139,6 +139,15 @@ void matTransposeOMP(float **M, float **T, int n) {
 int checkSymOMP(float **M, int n) {
     int size = pow(2, n);
     int is_sym = 1; // assumed symmetric
+
+    /*
+     * If you want to use a different number of threads
+     * using export OMP_NUM_THREADS
+     * you must comment the next two lines of code,
+     * otherwise 'export' it is overwritten
+    */
+    int num_thr = choose_num_threads(size);
+    omp_set_num_threads(num_thr);
 
 #pragma omp parallel for collapse(2) reduction(&&:is_sym)
     for (int i = 0; i < size; i++) {
