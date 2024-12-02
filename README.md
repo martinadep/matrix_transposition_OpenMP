@@ -119,7 +119,7 @@ $ git clone https://github.com/martinadep/parallel_midterm
 ```
 2. Navigate the the repository folder
 ```bash
-$ cd parallel_midterm/
+$ cd parallel_midterm/src
 ```
 5. Run the following commands:
 ```bash
@@ -131,17 +131,17 @@ $ ./matrix_transposition <select_matrix_size>
 This section shows how to run additional tests
 1. Block-size, run the following commands:
 ```bash
-$ cd scripts/
+$ cd parallel_midterm/scripts/
 $ ./test_block_size.sh
 ```
 2. Implicit flags, run the following commands:
 ```bash
-$ cd scripts/
+$ cd parallel_midterm/scripts/
 $ ./test_implicit_flags.sh
 ```
 3. Number of threads, run the following commands:
 ```bash
-$ cd scripts/
+$ cd parallel_midterm/scripts/
 $ ./test_omp.sh
 ```
 ---
