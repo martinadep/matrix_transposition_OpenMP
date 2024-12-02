@@ -1,6 +1,6 @@
 #!/bin/bash
 
-SOURCE_FILES="./explicit/explicit.c src/utils.c"
+SOURCE_FILES="../explicit/explicit.c src/utils.c"
 OUTPUT_FILE="open"
 OUTPUTDIR="explicit_out"
 

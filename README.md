@@ -3,14 +3,11 @@
 
 ## Table of Contents
 
-- [Introduction to Parallel Computing - First Deliverable](#introduction-to-parallel-computing---deliverable-1)
 - [Table of Contents](#table-of-contents)
 - [Project Structure](#project-structure)
 - [How to Reproduce](#how-to-reproduce)
     - [On HPC Cluster](#on-hpc-cluster)
     - [On your local machine](#on-your-local-machine)
-    - [Data Analysis](#data-analysis)
-
 ---
 
 # Project Structure
@@ -61,6 +58,23 @@ $ cd parallel_midterm/
 ```bash
 $ qsub midterm.pbs
 ```
+## Additional tests
+This section shows how to run additional tests:
+- (1) testing different block sizes for block-based matrix transposition
+- (2) testing different flags for implicit matrix transposition
+- (3) testing different number of threads for omp optimized matrix transposition
+  Run the following command:
+```bash
+$ qsub .pbs
+```
+Run the following command:
+```bash
+$ qsub .pbs
+```
+Run the following command:
+```bash
+$ qsub .pbs
+```
 
 ## On your local machine
 
@@ -80,5 +94,26 @@ $ cd parallel_midterm/
 ```bash
 $ gcc main.c utils.c -std=c11 -lm -fopenmp -o bin/matrix_transposition
 $ export OMP_NUM_THREADS=<select_num_threads>; ./matrix_transposition <select_matrix_size>
+```
+
+## Additional tests
+This section shows how to run additional tests: 
+- (1) testing different block sizes for block-based matrix transposition
+- (2) testing different flags for implicit matrix transposition
+- (3) testing different number of threads for omp optimized matrix transposition
+1. Block-size, run the following commands:
+```bash
+$ cd scripts/
+$ ./test_block_size.sh
+```
+2. Implicit flags, run the following commands:
+```bash
+$ cd scripts/
+$ ./test_implicit_flags.sh
+```
+3. Number of threads, run the following commands:
+```bash
+$ cd scripts/
+$ ./test_omp.sh
 ```
 ---

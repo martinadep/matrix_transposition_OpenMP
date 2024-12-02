@@ -23,6 +23,7 @@ float** allocate_sqr_matrix(int size);
 void init_matrix(float** matrix, int size);
 void print_matrix(float** matrix, int size);
 int choose_block_size(int matrix_size);
+int choose_num_threads(int matrix_size);
 
 int remove_outliers(float data[], float filtered_data[], int data_size, float threshold);
 float calculate_std_dev(float arr[], int array_size, float mean);

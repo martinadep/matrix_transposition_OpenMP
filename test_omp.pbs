@@ -1,0 +1,19 @@
+#!/bin/bash
+#PBS -N testOMP
+#PBS -o ./test_omp.txt
+#PBS -e ./test_omp.e
+#PBS -q short_cpuQ
+#PBS -l walltime=0:10:00
+#PBS -l select=1:ncpus=96:mem=256mb:ompthreads=96
+
+# Modules for C
+module load gcc91
+# Define gcc and g++ to use the version 9.1.0
+
+gcc() {gcc-9.1.0 "$@"}
+gcc --version
+echo "Job running on: $(hostname)"
+lscpu
+
+cd scripts
+./test_omp.sh
