@@ -23,12 +23,26 @@
 ├── test_functions
 │   ├── test_functions.c
 ├── src
+│   ├── explicit
+│   │   ├── explicit.c
+│   │   ├── explicit.h
+│   ├── implicit
+│   │   ├── block_size.c
+│   │   ├── implicit.c
+│   │   ├── implicit.h
 │   ├── main.c
 │   ├── main.h
 │   ├── utils.c
+├── scripts
+│   ├── test_block_size.sh
+│   ├── test_implicit_flags.sh
+│   ├── test_omp.sh
 ├── .gitignore
 ├── CMakeLists.txt
 ├── midterm.pbs
+├── test_block_size.pbs
+├── test_implicit_flags.pbs
+├── test_omp.pbs
 ├── README.md
 ```
 ---
@@ -78,16 +92,16 @@ This section shows how to run additional tests:
       - naive matrix transposition
       - block-based matrix transposition
       - block-based loop-unrolled matrix transposition
-  
-Run the following command:
+
+(1) Run the following command:
 ```bash
 $ qsub test_block_size.pbs
 ```
-Run the following command:
+(2) Run the following command:
 ```bash
 $ qsub test_implicit_flags.pbs
 ```
-Run the following command:
+(3) Run the following command:
 ```bash
 $ qsub test_omp.pbs
 ```
@@ -113,10 +127,7 @@ $ export OMP_NUM_THREADS=<select_num_threads>; ./matrix_transposition <select_ma
 ```
 
 ## Additional tests
-This section shows how to run additional tests: 
-- (1) testing different block sizes for block-based matrix transposition
-- (2) testing different flags for implicit matrix transposition
-- (3) testing different number of threads for omp optimized matrix transposition
+This section shows how to run additional tests
 1. Block-size, run the following commands:
 ```bash
 $ cd scripts/
