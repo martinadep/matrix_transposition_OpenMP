@@ -7,7 +7,12 @@
 #include <tgmath.h>
 #include <time.h>
 
+/// This main performs three matrix transposition and check symmetry approaches:
+/// - Sequential
+/// - Implicitly parallelized
+/// - Explicitly parallelized
 ///
+/// It takes <pow> as input and operates over [2^pow]x[2^pow] matrices
 int main(int argc, char **argv) {
     srand(time(NULL));
     if (argc != 2) {

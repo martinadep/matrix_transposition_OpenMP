@@ -61,9 +61,25 @@ $ qsub midterm.pbs
 ## Additional tests
 This section shows how to run additional tests:
 - (1) testing different block sizes for block-based matrix transposition
+  - Block sizes are:
+    - 32x32
+    - 64x64
+    - 128x128
+    - 256x256
 - (2) testing different flags for implicit matrix transposition
+  - Tested flags are:
+    - O0
+    - O1
+    - O2
+    - O1 -march=native
+    - O2 -march=native
 - (3) testing different number of threads for omp optimized matrix transposition
-  Run the following command:
+    - Tests are performed for:
+      - naive matrix transposition
+      - block-based matrix transposition
+      - block-based loop-unrolled matrix transposition
+  
+Run the following command:
 ```bash
 $ qsub test_block_size.pbs
 ```
