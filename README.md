@@ -124,7 +124,7 @@ $ cd parallel_midterm/
 5. Run the following commands:
 ```bash
 $ gcc main.c utils.c -std=c11 -lm -fopenmp -o bin/matrix_transposition
-$ export OMP_NUM_THREADS=<select_num_threads>; ./matrix_transposition <select_matrix_size>
+$ ./matrix_transposition <select_matrix_size>
 ```
 
 ## Additional tests
