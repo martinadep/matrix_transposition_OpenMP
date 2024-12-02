@@ -56,6 +56,7 @@
 - SSH client
 
 ### Steps
+!!! remember to change home directory path in each .pbs before submitting !!!
 1. Open an ssh session on University of Trento's HPC cluster, in your preferred terminal
 ```bash
 $ ssh <username>@hpc.unitn.it
@@ -120,8 +121,7 @@ $ git clone https://github.com/martinadep/parallel_midterm
 ```bash
 $ cd parallel_midterm/
 ```
-5. Run the following commands:
-```bash
+5. Run the following commands:```bash
 $ gcc main.c utils.c -std=c11 -lm -fopenmp -o bin/matrix_transposition
 $ export OMP_NUM_THREADS=<select_num_threads>; ./matrix_transposition <select_matrix_size>
 ```

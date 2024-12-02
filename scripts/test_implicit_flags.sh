@@ -3,7 +3,7 @@ rm -r objects
 rm medie_implicit.csv
 cd ..
 SOURCE_FILES="./src/implicit/implicit.c ./src/utils.c"
-OUTPUTFILE=$medie_implicit.csv
+OUTPUTFILE="medie_implicit.csv"
 
 gcc $SOURCE_FILES -std=c11 -lm -fopenmp -O0 -o esegO0.o
 echo "- compiled with -O0" >> $OUTPUTFILE
