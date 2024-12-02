@@ -105,6 +105,16 @@ int checkSym(float **M, int n) {
 void matTransposeOMP(float **M, float **T, int n) {
     int size = pow(2, n);
     int block_size = choose_block_size(size);
+
+    /*
+     * If you want to use a different number of threads
+     * using export OMP_NUM_THREADS
+     * you must comment the next two lines of code,
+     * otherwise 'export' it is overwritten
+    */
+    int num_thr = choose_num_threads(size);
+    omp_set_num_threads(num_thr);
+
 #pragma omp parallel for collapse(2)
     for (int i = 0; i < size; i += block_size) {
         for (int j = 0; j < size; j += block_size) {
@@ -124,15 +134,6 @@ void matTransposeOMP(float **M, float **T, int n) {
 int checkSymOMP(float **M, int n) {
     int size = pow(2, n);
     int is_sym = 1; // assumed symmetric
-
-    /*
-     * If you want to use a different number of threads
-     * using export OMP_NUM_THREADS
-     * you must comment the next two lines of code,
-     * otherwise 'export' it is overwritten
-    */
-    //int num_thr = choose_num_threads(size);
-    //omp_set_num_threads(num_thr);
 
 #pragma omp parallel for collapse(2) reduction(&&:is_sym)
     for (int i = 0; i < size; i++) {

@@ -9,7 +9,9 @@
 # Modules for C
 module load gcc91
 
-gcc() {gcc-9.1.0 "$@"}
+gcc() {
+  gcc-9.1.0 "$@"
+}
 gcc --version
 echo "Job running on: $(hostname)"
 lscpu
