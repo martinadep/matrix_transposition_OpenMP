@@ -65,15 +65,15 @@ This section shows how to run additional tests:
 - (3) testing different number of threads for omp optimized matrix transposition
   Run the following command:
 ```bash
-$ qsub .pbs
+$ qsub test_block_size.pbs
 ```
 Run the following command:
 ```bash
-$ qsub .pbs
+$ qsub test_implicit_flags.pbs
 ```
 Run the following command:
 ```bash
-$ qsub .pbs
+$ qsub test_omp.pbs
 ```
 
 ## On your local machine
