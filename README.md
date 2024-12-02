@@ -56,7 +56,6 @@
 - SSH client
 
 ### Steps
-!!! remember to change home directory path in each .pbs before submitting !!!
 1. Open an ssh session on University of Trento's HPC cluster, in your preferred terminal
 ```bash
 $ ssh <username>@hpc.unitn.it
@@ -69,6 +68,8 @@ $ git clone https://github.com/martinadep/parallel_midterm
 ```bash
 $ cd parallel_midterm/
 ```
+
+**!!! remember to change home directory path in each .pbs before submitting !!!**
 3. Run the following command:
 ```bash
 $ qsub midterm.pbs
@@ -81,6 +82,9 @@ This section shows how to run additional tests:
     - 64x64
     - 128x128
     - 256x256
+```bash
+$ qsub test_block_size.pbs
+```
 - (2) testing different flags for implicit matrix transposition
   - Tested flags are:
     - O0
@@ -88,21 +92,16 @@ This section shows how to run additional tests:
     - O2
     - O1 -march=native
     - O2 -march=native
+
+```bash
+$ qsub test_implicit_flags.pbs
+```
 - (3) testing different number of threads for omp optimized matrix transposition
     - Tests are performed for:
       - naive matrix transposition
       - block-based matrix transposition
       - block-based loop-unrolled matrix transposition
 
-(1) Run the following command:
-```bash
-$ qsub test_block_size.pbs
-```
-(2) Run the following command:
-```bash
-$ qsub test_implicit_flags.pbs
-```
-(3) Run the following command:
 ```bash
 $ qsub test_omp.pbs
 ```
@@ -121,7 +120,8 @@ $ git clone https://github.com/martinadep/parallel_midterm
 ```bash
 $ cd parallel_midterm/
 ```
-5. Run the following commands:```bash
+5. Run the following commands:
+```bash
 $ gcc main.c utils.c -std=c11 -lm -fopenmp -o bin/matrix_transposition
 $ export OMP_NUM_THREADS=<select_num_threads>; ./matrix_transposition <select_matrix_size>
 ```
