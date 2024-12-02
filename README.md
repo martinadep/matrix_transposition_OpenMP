@@ -70,6 +70,7 @@ $ cd parallel_midterm/
 ```
 
 **!!! remember to change home directory path in each .pbs before submitting !!!**
+
 3. Run the following command:
 ```bash
 $ qsub midterm.pbs
