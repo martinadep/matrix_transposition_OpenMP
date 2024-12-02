@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "implicit.h"
-#include "../src/main.h"
+#include "../main.h"
 
 /// Execute this main with different <block_size>.
 /// It computes matrix transposition with a block-based approach.

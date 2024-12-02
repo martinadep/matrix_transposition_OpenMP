@@ -3,7 +3,7 @@
 #include <time.h>
 #include <omp.h>
 #include "explicit.h"
-#include "../src/main.h"
+#include "../main.h"
 
 /// Execute this main with different <num_threads>.
 /// It computes matrix transposition with three different approaches

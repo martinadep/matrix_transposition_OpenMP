@@ -4,13 +4,13 @@ project(PARCO1 C)
 set(CMAKE_C_STANDARD 11)
 
 # main executable
-add_executable(main src/main.c test_functions/test_functions.c src/main.h src/utils.c)
+add_executable(main src/main.c src/test_functions/test_functions.c src/main.h src/utils.c)
 # block based executable
-add_executable(implicit implicit/implicit.c implicit/implicit.h src/utils.c)
+add_executable(implicit src/implicit/implicit.c src/implicit/implicit.h src/utils.c)
 # block based executable
-add_executable(blocksize implicit/block_size.c implicit/implicit.h src/utils.c)
+add_executable(blocksize src/implicit/block_size.c src/implicit/implicit.h src/utils.c)
 # explicit executable
-add_executable(open explicit/explicit.c explicit/explicit.h src/utils.c)
+add_executable(open src/explicit/explicit.c src/explicit/explicit.h src/utils.c)
 
 # Include directories for shared headers
 target_include_directories(main PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

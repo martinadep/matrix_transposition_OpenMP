@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include "implicit.h"
-#include "../src/main.h"
+#include "../main.h"
 #include<omp.h>
 
 /// Compile this main with different optimization flags.

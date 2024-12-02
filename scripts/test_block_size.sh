@@ -1,6 +1,6 @@
 #!/bin/bash
-
-SOURCE_FILES="../implicit/block_size.c src/utils.c"
+cd ..
+SOURCE_FILES="./src/implicit/block_size.c ./src/utils.c"
 OUTPUT_FILE="block"
 OUTPUTDIR="blockbasedsize_out"
 
